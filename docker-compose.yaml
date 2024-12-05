@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  db:
+    container_name: postgres
+    image: postgres
+    ports: 
+      - ${DB_PORT}:5432
+    restart: always
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_PASSWORD=${DB_PASS}
+    networks:
+      - custom
+    env_file:
+      - .env
+
+networks:
+  custom:
+    driver: bridge
