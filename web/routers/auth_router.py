@@ -2,7 +2,6 @@ from typing import Annotated
 from fastapi import APIRouter, Cookie, Depends, HTTPException, Response, status
 from nanoid import generate
 
-from db.models.user import UserOrm
 from db.pg_gateway.PostgresSessionGateway import PostgresSessionGateway
 from db.pg_gateway.PostgresUserGateway import PostgresUserGateway
 from dtos.session_dto import SessionDTO
@@ -67,7 +66,7 @@ async def login_user(response: Response, loginning_user: Annotated[SUserLogin, D
         return await MAvitoResponse(None, e.what()).as_dict()
     except Exception as e:
         response.status_code = 500
-        return await MAvitoResponse(None, 'unknown exception').as_dict()
+        return await MAvitoResponse(None, 'internal server error').as_dict()
 
 
 @auth_router.get('/logout')
